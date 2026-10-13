@@ -47,49 +47,6 @@ void loop() {
   }
 }
 
-#include <Servo.h>
-#include <math.h>
-
-#define PIN_SERVO 10
-
-Servo myServo;
-
-unsigned long MOVING_TIME = 3000; 
-unsigned long moveStartTime;
-
-int startAngle = 30; 
-int stopAngle  = 90;
-
-void setup() {
-  myServo.attach(PIN_SERVO);
-
-  myServo.write(startAngle); 
-  delay(500);
-
-  moveStartTime = millis(); 
-}
-
-void loop() {
-  unsigned long progress = millis() - moveStartTime;
-
-  if (progress <= MOVING_TIME) {
-    
-    float t = (float)progress / MOVING_TIME;
-
-    float eased = (1.0 - cos(PI * t)) / 2.0;
-
-    float angle = startAngle
-                + (stopAngle - startAngle) * eased;
-
-    myServo.write((int)(angle + 0.5));
-  } else {
-    int temp = startAngle;
-    startAngle = stopAngle;
-    stopAngle = temp;
-
-    moveStartTime = millis(); 
-  }
-}
 
 
 
